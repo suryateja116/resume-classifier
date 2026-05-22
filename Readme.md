@@ -30,20 +30,24 @@ The system combines Natural Language Processing (NLP), Machine Learning, and a w
 ---
 
 ## Project Structure
+
+```text
 project/
+│── app.py
+│── best_model.pkl
+│── vectorizer.pkl
+│── README.md
+│── Resume.csv
 │
-├── app.py
-├── best_model.pkl
-├── vectorizer.pkl
 ├── templates/
 │   ├── index.html
 │   └── result.html
+│
 ├── static/
 │   └── style.css
-├── uploads/
-├── Resume.csv
-└── README.md
-
+│
+└── uploads/
+```
 ---
 
 ## Installation and Setup
