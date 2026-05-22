@@ -1,0 +1,9 @@
+flask
+scikit-learn
+pandas
+numpy
+pdfplumber
+python-docx
+matplotlib
+seaborn
+werkzeug

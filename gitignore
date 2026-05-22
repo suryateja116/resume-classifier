@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.egg
+*.egg-info/
+dist/
+build/
+*.so
+
+# Virtual Environment
+.venv/
+venv/
+env/
+ENV/
+
+# macOS
+.DS_Store
+__MACOSX/
+
+# Uploads (user-uploaded files - don't commit)
+uploads/
+!uploads/.gitkeep
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+
+# Environment variables
+.env
+.env.local
+
+# Logs
+*.log
+
+# Model files (optional: comment out if you want to include them)
+# best_model.pkl
+# vectorizer.pkl

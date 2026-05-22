@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Result — Resume Analyzer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+<div class="result-bg">
+
+    <!-- Page header -->
+    <div class="result-header">
+        <p class="result-eyebrow">Analysis complete</p>
+        <h1 class="result-title">Your career snapshot</h1>
+    </div>
+
+    <!-- Dashboard grid -->
+    <div class="dashboard">
+
+        <!-- Panel 1: Predicted Role -->
+        <div class="panel role-card">
+            <p class="panel-eyebrow"><span></span> Predicted role</p>
+            <p class="role-name">{{ role }}</p>
+            <div class="role-confidence">
+                <span>Confidence</span>
+                <div class="role-confidence-bar">
+                    <div class="role-confidence-fill"></div>
+                </div>
+                <span>High</span>
+            </div>
+        </div>
+
+        <!-- Panel 2: Top match score -->
+        <div class="panel score-card">
+            <p class="panel-eyebrow"><span></span> Best match score</p>
+            {% if matches %}
+            <p class="score-big">
+                {{ matches[0][1] | round(0) | int }}<span class="score-suffix">%</span>
+            </p>
+            <p class="score-label">{{ matches[0][0] }}</p>
+            {% else %}
+            <p class="score-big">—</p>
+            <p class="score-label">No matches found</p>
+            {% endif %}
+        </div>
+
+        <!-- Panel 3: All matches -->
+        <div class="panel">
+            <p class="panel-eyebrow"><span></span> Top job matches</p>
+            <ul class="match-list">
+                {% for job, score in matches %}
+                <li class="match-item">
+                    <div>
+                        <p class="match-name">{{ job }}</p>
+                        <div class="match-bar-wrap">
+                            <div class="match-bar"
+                                 style="width: {{ score | round(1) }}%;
+                                        animation-delay: {{ loop.index0 * 0.08 }}s;">
+                            </div>
+                        </div>
+                    </div>
+                    <span class="match-pct">{{ score }}%</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Panel 4: Skills by category -->
+        <div class="panel">
+            <p class="panel-eyebrow"><span></span> Skills detected</p>
+
+            {% for category, skill_list in skills.items() %}
+            <div style="margin-bottom: 18px;">
+                <p style="font-size:11px; text-transform:uppercase; letter-spacing:.12em;
+                          color:var(--dim); margin-bottom:10px; font-weight:600;">
+                    {{ category }}
+                </p>
+                <div class="skills">
+                    {% for skill in skill_list %}
+                    <span class="skill">{{ skill }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+
+            {% if not skills %}
+            <p style="color:var(--dim); font-size:14px;">No recognized skills detected.</p>
+            {% endif %}
+        </div>
+
+        <!-- Panel 5: Experience & Education (only shown if detected) -->
+        {% if exp_years or education %}
+        <div class="panel" style="grid-column: 1 / -1; animation-delay:.25s;">
+            <p class="panel-eyebrow"><span></span> Background</p>
+            <div style="display:flex; gap:48px; flex-wrap:wrap;">
+
+                {% if exp_years %}
+                <div>
+                    <p style="font-size:11px; text-transform:uppercase; letter-spacing:.12em;
+                              color:var(--dim); margin-bottom:6px;">Experience</p>
+                    <p style="font-family:'Syne',sans-serif; font-size:28px; font-weight:800;
+                              color:var(--sage);">
+                        {{ exp_years }}<span style="font-size:16px; font-weight:400;
+                        color:var(--sage-lt);"> yrs</span>
+                    </p>
+                </div>
+                {% endif %}
+
+                {% if education %}
+                <div>
+                    <p style="font-size:11px; text-transform:uppercase; letter-spacing:.12em;
+                              color:var(--dim); margin-bottom:10px;">Education</p>
+                    <div class="skills">
+                        {% for deg in education %}
+                        <span class="skill">{{ deg }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+        {% endif %}
+
+    </div><!-- /.dashboard -->
+
+    <!-- Back link -->
+    <div class="back-wrap">
+        <a href="/" class="back">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                      d="M19 12H5m0 0l7 7m-7-7l7-7"/>
+            </svg>
+            Upload another resume
+        </a>
+    </div>
+
+</div>
+</body>
+</html>
